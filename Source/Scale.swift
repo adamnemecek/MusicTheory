@@ -262,11 +262,11 @@ extension ScaleType: Codable {
   /// Checks the equability between two `ScaleType`s by their intervals.
   ///
   /// - Parameters:
-  ///   - left: Left handside of the equation.
-  ///   - right: Right handside of the equation.
+  ///   - lhs: Left handside of the equation.
+  ///   - rhs: Right handside of the equation.
   /// - Returns: Returns Bool value of equation of two given scale types.
-  public static func ==(left: ScaleType, right: ScaleType) -> Bool {
-    return left.intervals == right.intervals
+  public static func ==(lhs: ScaleType, rhs: ScaleType) -> Bool {
+    return lhs.intervals == rhs.intervals
   }
 }
 
@@ -384,11 +384,11 @@ public struct Scale: Equatable, Codable {
   /// Checks the equability between two `Scale`s by their base key and notes.
   ///
   /// - Parameters:
-  ///   - left: Left handside of the equation.
-  ///   - right: Right handside of the equation.
+  ///   - lhs: Left handside of the equation.
+  ///   - rhs: Right handside of the equation.
   /// - Returns: Returns Bool value of equation of two given scales.
-  public func ==(left: Scale, right: Scale) -> Bool {
-    return left.key == right.key && left.type == right.type
+  public static func ==(lhs: Scale, rhs: Scale) -> Bool {
+    return lhs.key == rhs.key && lhs.type == rhs.type
   }
 }
 

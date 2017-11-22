@@ -672,8 +672,8 @@ public struct ChordType: ChordDescription, Equatable {
   /// Checks the equability between two `ChordType`s by their intervals.
   ///
   /// - Parameters:
-  ///   - left: Left handside of the equation.
-  ///   - right: Right handside of the equation.
+  ///   - lhs: Left handside of the equation.
+  ///   - rhs: Right handside of the equation.
   /// - Returns: Returns Bool value of equation of two given chord types.
   public static func ==(lhs: ChordType, rhs: ChordType) -> Bool {
     return lhs.intervals == rhs.intervals
@@ -767,8 +767,8 @@ public struct Chord: ChordDescription, Equatable {
   /// Checks the equability between two chords by their base key and notes.
   ///
   /// - Parameters:
-  ///   - left: Left handside of the equation.
-  ///   - right: Right handside of the equation.
+  ///   - lhs: Left handside of the equation.
+  ///   - rhs: Right handside of the equation.
   /// - Returns: Returns Bool value of equation of two given chords.
   public static func ==(lhs: Chord, rhs: Chord) -> Bool {
     return lhs.key == rhs.key && lhs.type == rhs.type

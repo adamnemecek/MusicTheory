@@ -322,11 +322,11 @@ public struct Note: Equatable, Codable {
   /// Compares the equality of two notes by their types and octaves.
   ///
   /// - Parameters:
-  ///   - left: Left handside `Note` to be compared.
-  ///   - right: Right handside `Note` to be compared.
+  ///   - lhs: Left handside `Note` to be compared.
+  ///   - rhs: Right handside `Note` to be compared.
   /// - Returns: Returns the bool value of comparisation of two notes.
-  public static func ==(left: Note, right: Note) -> Bool {
-    return left.type == right.type && left.octave == right.octave
+  public static func ==(lhs: Note, rhs: Note) -> Bool {
+    return lhs.type == rhs.type && lhs.octave == rhs.octave
   }
 
   // MARK: - Note
