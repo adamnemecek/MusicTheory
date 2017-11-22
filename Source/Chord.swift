@@ -273,7 +273,7 @@ public enum ChordSuspendedType: Int, ChordPart {
 /// Defines extended chords.
 /// If you add one octave up of second, fourth or sixth notes of the chord, you have extended chords.
 /// You can combine extended chords more than one in a chord.
-public struct ChordExtensionType: ChordPart {
+public struct ChordExtensionType: ChordPart, Comparable {
 
   /// Defines accident of extended chord.
   public enum Accident: Int, ChordDescription {
@@ -327,7 +327,8 @@ public struct ChordExtensionType: ChordPart {
   }
 
   /// Defines type of the extended chords.
-  public enum ExtensionType: Int, ChordDescription {
+  public enum ExtensionType: Int, ChordDescription, Comparable {
+
     /// 9th chord. Second note of the chord, one octave up from root.
     case ninth = 9
     /// 11th chord. Eleventh note of the chord, one octave up from root.
@@ -374,6 +375,10 @@ public struct ChordExtensionType: ChordPart {
     /// All values of `ExtensionType`.
     public static var all: [ExtensionType] {
       return [.ninth, .eleventh, .thirteenth]
+    }
+
+    public static func <(lhs: ExtensionType, rhs: ExtensionType) -> Bool {
+      return lhs.rawValue < rhs.rawValue
     }
   }
 
@@ -445,6 +450,14 @@ public struct ChordExtensionType: ChordPart {
       }
     }
     return all
+  }
+
+  public static func ==(lhs: ChordExtensionType, rhs: ChordExtensionType) -> Bool {
+    return lhs.type == rhs.type
+  }
+
+  public static func <(lhs: ChordExtensionType, rhs: ChordExtensionType) -> Bool {
+    return lhs.type < rhs.type
   }
 }
 
@@ -549,7 +562,7 @@ public struct ChordType: ChordDescription, Equatable {
   /// Intervals of parts between root.
   public var intervals: [Interval] {
     var parts: [ChordPart?] = [sixth == nil ? third : nil, suspended, fifth, sixth, seventh]
-    parts += extensions?.sorted(by: { $0.type.rawValue < $1.type.rawValue }).map({ $0 as ChordPart? }) ?? []
+    parts += extensions?.sorted().map({ $0 as ChordPart? }) ?? []
     return [.unison] + parts.flatMap({ $0?.interval })
   }
 
@@ -559,7 +572,7 @@ public struct ChordType: ChordDescription, Equatable {
     var sixthNotation = sixth == nil ? "" : "\(sixth!.notation)\(seventh == nil ? "" : "/")"
     let suspendedNotation = suspended?.notation ?? ""
     var extensionNotation = ""
-    let ext = extensions?.sorted(by: { $0.type.rawValue < $1.type.rawValue }) ?? []
+    let ext = extensions?.sorted() ?? []
 
     var singleNotation = !ext.isEmpty && true
     for i in 0..<max(0, ext.count - 1) {
@@ -598,8 +611,7 @@ public struct ChordType: ChordDescription, Equatable {
     let sixthNotation = sixth?.description
     let suspendedNotation = suspended?.description
     let extensionsNotation = extensions?
-      .sorted(by: { $0.type.rawValue < $1.type.rawValue })
-      .map({ $0.description as String? }) ?? []
+      .sorted().map({ $0.description as String? }) ?? []
     let desc = [third.description, fifth.description, sixthNotation, seventhNotation, suspendedNotation] + extensionsNotation
     return desc.flatMap({ $0 }).joined(separator: " ")
   }
