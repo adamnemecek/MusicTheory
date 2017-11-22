@@ -684,9 +684,9 @@ public struct ChordType: ChordDescription, Equatable {
 /// Defines a chord with a root note and type.
 public struct Chord: ChordDescription, Equatable {
   /// Type of the chord.
-  public var type: ChordType
+  public let type: ChordType
   /// Root note of the chord.
-  public var key: NoteType
+  public let key: NoteType
   /// Inversion index of the chord.
   public private(set) var inversion: Int
 
@@ -773,7 +773,6 @@ public struct Chord: ChordDescription, Equatable {
   public static func ==(lhs: Chord, rhs: Chord) -> Bool {
     return lhs.key == rhs.key && lhs.type == rhs.type
   }
-
 }
 
 // MARK: - Extensions

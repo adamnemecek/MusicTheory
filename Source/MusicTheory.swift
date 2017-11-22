@@ -101,10 +101,10 @@ public struct TimeSignature: Codable {
 /// Defines the tempo of the music with beats per second and time signature.
 public struct Tempo: Codable {
   /// Time signature of music.
-  public var timeSignature: TimeSignature
+  public let timeSignature: TimeSignature
 
   /// Beats per minutes.
-  public var bpm: Double
+  public let bpm: Double
 
   /// Initilizes tempo with time signature and BPM.
   ///
