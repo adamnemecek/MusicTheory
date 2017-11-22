@@ -440,7 +440,11 @@ extension Scale {
       chords.append(ChordType(intervals: chordIntervals))
     }
     // Generate chords for each key in scale.
-    return chords.enumerated().map({ $1 == nil ? nil : Chord(type: $1!, key: noteTypes[$0]) })
+    return chords.enumerated().flatMap { tuple in
+      tuple.element.flatMap {
+        Chord(type: $0, key: noteTypes[tuple.offset])
+      }
+    }
   }
 }
 
