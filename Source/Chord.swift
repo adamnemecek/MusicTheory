@@ -634,7 +634,7 @@ public struct ChordType: ChordDescription, Equatable {
       }
       return comb
     }
-    
+
     var all = [ChordType]()
     let allThird = ChordThirdType.all
     let allFifth = ChordFifthType.all

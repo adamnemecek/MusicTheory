@@ -258,7 +258,7 @@ extension ScaleType: Codable {
   }
 
   // MARK: - ScaleType
-  
+
   /// Checks the equability between two `ScaleType`s by their intervals.
   ///
   /// - Parameters:
@@ -327,18 +327,6 @@ extension ScaleType: CustomStringConvertible {
   }
 }
 
-// MARK: - Scale
-
-/// Checks the equability between two `Scale`s by their base key and notes.
-///
-/// - Parameters:
-///   - left: Left handside of the equation.
-///   - right: Right handside of the equation.
-/// - Returns: Returns Bool value of equation of two given scales.
-public func ==(left: Scale, right: Scale) -> Bool {
-  return left.key == right.key && left.type == right.type
-}
-
 /// Scale object with `ScaleType` and scale's key of `NoteType`.
 /// Could calculate note sequences in [Note] format.
 public struct Scale: Equatable, Codable {
@@ -389,6 +377,18 @@ public struct Scale: Equatable, Codable {
       notes += type.intervals.map({ note + $0 })
     })
     return notes
+  }
+
+  // MARK: - Scale
+
+  /// Checks the equability between two `Scale`s by their base key and notes.
+  ///
+  /// - Parameters:
+  ///   - left: Left handside of the equation.
+  ///   - right: Right handside of the equation.
+  /// - Returns: Returns Bool value of equation of two given scales.
+  public func ==(left: Scale, right: Scale) -> Bool {
+    return left.key == right.key && left.type == right.type
   }
 }
 

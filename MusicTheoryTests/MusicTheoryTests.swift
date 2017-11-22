@@ -10,7 +10,7 @@ import XCTest
 import MusicTheory
 
 class MusicTheoryTests: XCTestCase {
-    
+
   override func setUp() {
     super.setUp()
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -97,7 +97,7 @@ extension MusicTheoryTests {
     let cmajNotes: [NoteType] = [.c, .e, .g]
     let cmaj = Chord(type: ChordType(third: .major), key: .c)
     XCTAssert(cmajNotes == cmaj.noteTypes)
-    
+
     let cminNotes: [NoteType] = [.c, .eFlat, .g]
     let cmin = Chord(type: ChordType(third: .minor), key: .c)
     XCTAssert(cminNotes == cmin.noteTypes)
