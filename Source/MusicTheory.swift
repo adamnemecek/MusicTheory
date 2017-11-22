@@ -240,17 +240,6 @@ extension NoteType: CustomStringConvertible {
   }
 }
 
-// MARK: - Note
-
-/// Calculates the `Note` above `Interval`.
-///
-/// - Parameters:
-///   - note: The note being added interval.
-///   - interval: Interval above.
-/// - Returns: Returns `Note` above interval.
-public func +(note: Note, interval: Interval) -> Note {
-  return Note(midiNote: note.midiNote + interval.halfstep)
-}
 
 /// Note object with `NoteType` and octave.
 /// Could be initilized with midiNote.
@@ -338,6 +327,18 @@ public struct Note: Equatable, Codable {
   /// - Returns: Returns the bool value of comparisation of two notes.
   public static func ==(left: Note, right: Note) -> Bool {
     return left.type == right.type && left.octave == right.octave
+  }
+
+  // MARK: - Note
+
+  /// Calculates the `Note` above `Interval`.
+  ///
+  /// - Parameters:
+  ///   - note: The note being added interval.
+  ///   - interval: Interval above.
+  /// - Returns: Returns `Note` above interval.
+  public static func +(note: Note, interval: Interval) -> Note {
+    return Note(midiNote: note.midiNote + interval.halfstep)
   }
 }
 
@@ -460,7 +461,7 @@ public enum Interval: Equatable, ExpressibleByIntegerLiteral {
     case .m7: return 10
     case .M7: return 11
     case .P8: return 12
-    case .custom(let h): return h
+    case let .custom(h): return h
     }
   }
 
@@ -554,7 +555,7 @@ extension Interval: CustomStringConvertible {
     case .m7: return "minor seventh"
     case .M7: return "major seventh"
     case .P8: return "octave"
-    case .custom(let halfstep): return "\(halfstep)th"
+    case let .custom(halfstep): return "\(halfstep)th"
     }
   }
 
@@ -574,7 +575,7 @@ extension Interval: CustomStringConvertible {
     case .m7: return "vii"
     case .M7: return "VII"
     case .P8: return "VII"
-    case .custom(let halfstep): return "\(halfstep)"
+    case let .custom(halfstep): return "\(halfstep)"
     }
   }
 }
