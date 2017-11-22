@@ -129,48 +129,6 @@ public struct Tempo: Codable {
   }
 }
 
-// MARK: - NoteType
-
-/// Calculates the `NoteType` above `Interval`.
-///
-/// - Parameters:
-///   - noteType: The note type being added interval.
-///   - interval: Interval above.
-/// - Returns: Returns `NoteType` above interval.
-public func +(noteType: NoteType, interval: Interval) -> NoteType {
-  return NoteType(midiNote: noteType.rawValue + interval.halfstep)!
-}
-
-/// Calculates the `NoteType` above halfsteps.
-///
-/// - Parameters:
-///   - noteType: The note type being added halfsteps.
-///   - halfstep: Halfsteps above
-/// - Returns: Returns `NoteType` above halfsteps
-public func +(noteType: NoteType, halfstep: Int) -> NoteType {
-  return NoteType(midiNote: noteType.rawValue + halfstep)!
-}
-
-/// Calculates the `NoteType` below `Interval`.
-///
-/// - Parameters:
-///   - noteType: The note type being calculated.
-///   - interval: Interval below.
-/// - Returns: Returns `NoteType` below interval.
-public func -(noteType: NoteType, interval: Interval) -> NoteType {
-  return NoteType(midiNote: noteType.rawValue - interval.halfstep)!
-}
-
-/// Calculates the `NoteType` below halfsteps.
-///
-/// - Parameters:
-///   - noteType: The note type being calculated.
-///   - halfstep: Halfsteps below.
-/// - Returns: Returns `NoteType` below halfsteps.
-public func -(noteType: NoteType, halfstep: Int) -> NoteType {
-  return NoteType(midiNote: noteType.rawValue - halfstep)!
-}
-
 /// Defines 12 base notes in music.
 /// C, D, E, F, G, A, B with their flats.
 /// Raw values are included for easier calculation based on midi notes.
@@ -215,6 +173,49 @@ public enum NoteType: Int, Equatable, Codable {
     let raw = octave > 0 ? midiNote - (octave * 12) : midiNote - ((octave + 1) * 12) + 12
     guard let note = NoteType(rawValue: raw) else { return nil }
     self = note
+  }
+
+
+  // MARK: - NoteType
+
+  /// Calculates the `NoteType` above `Interval`.
+  ///
+  /// - Parameters:
+  ///   - noteType: The note type being added interval.
+  ///   - interval: Interval above.
+  /// - Returns: Returns `NoteType` above interval.
+  public static func +(noteType: NoteType, interval: Interval) -> NoteType {
+    return NoteType(midiNote: noteType.rawValue + interval.halfstep)!
+  }
+
+  /// Calculates the `NoteType` above halfsteps.
+  ///
+  /// - Parameters:
+  ///   - noteType: The note type being added halfsteps.
+  ///   - halfstep: Halfsteps above
+  /// - Returns: Returns `NoteType` above halfsteps
+  public static func +(noteType: NoteType, halfstep: Int) -> NoteType {
+    return NoteType(midiNote: noteType.rawValue + halfstep)!
+  }
+
+  /// Calculates the `NoteType` below `Interval`.
+  ///
+  /// - Parameters:
+  ///   - noteType: The note type being calculated.
+  ///   - interval: Interval below.
+  /// - Returns: Returns `NoteType` below interval.
+  public static func -(noteType: NoteType, interval: Interval) -> NoteType {
+    return NoteType(midiNote: noteType.rawValue - interval.halfstep)!
+  }
+
+  /// Calculates the `NoteType` below halfsteps.
+  ///
+  /// - Parameters:
+  ///   - noteType: The note type being calculated.
+  ///   - halfstep: Halfsteps below.
+  /// - Returns: Returns `NoteType` below halfsteps.
+  public static func -(noteType: NoteType, halfstep: Int) -> NoteType {
+    return NoteType(midiNote: noteType.rawValue - halfstep)!
   }
 }
 
