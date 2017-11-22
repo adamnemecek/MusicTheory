@@ -10,18 +10,6 @@
 
 import Foundation
 
-// MARK: - ScaleType
-
-/// Checks the equability between two `ScaleType`s by their intervals.
-///
-/// - Parameters:
-///   - left: Left handside of the equation.
-///   - right: Right handside of the equation.
-/// - Returns: Returns Bool value of equation of two given scale types.
-public func ==(left: ScaleType, right: ScaleType) -> Bool {
-  return left.intervals == right.intervals
-}
-
 /// Represents scale by the intervals between note sequences.
 public enum ScaleType: Equatable {
   /// Major scale.
@@ -267,6 +255,18 @@ extension ScaleType: Codable {
   public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(intervals, forKey: .intervals)
+  }
+
+  // MARK: - ScaleType
+  
+  /// Checks the equability between two `ScaleType`s by their intervals.
+  ///
+  /// - Parameters:
+  ///   - left: Left handside of the equation.
+  ///   - right: Right handside of the equation.
+  /// - Returns: Returns Bool value of equation of two given scale types.
+  public static func ==(left: ScaleType, right: ScaleType) -> Bool {
+    return left.intervals == right.intervals
   }
 }
 
