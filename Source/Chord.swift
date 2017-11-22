@@ -448,27 +448,8 @@ public struct ChordExtensionType: ChordPart {
   }
 }
 
-// MARK: - ChordType
-
-/// Checks the equability between two `ChordType`s by their intervals.
-///
-/// - Parameters:
-///   - left: Left handside of the equation.
-///   - right: Right handside of the equation.
-/// - Returns: Returns Bool value of equation of two given chord types.
-public func ==(left: ChordType?, right: ChordType?) -> Bool {
-  switch (left, right) {
-  case (.some(let left), .some(let right)):
-    return left.intervals == right.intervals
-  case (.none, .none):
-    return true
-  default:
-    return false
-  }
-}
-
 /// Defines full type of chord with all chord parts.
-public struct ChordType: ChordDescription {
+public struct ChordType: ChordDescription, Equatable {
   /// Thirds part. Second note of the chord.
   public var third: ChordThirdType
   /// Fifths part. Third note of the chord.
@@ -672,6 +653,18 @@ public struct ChordType: ChordDescription {
       }
     }
     return all
+  }
+
+  // MARK: - ChordType
+
+  /// Checks the equability between two `ChordType`s by their intervals.
+  ///
+  /// - Parameters:
+  ///   - left: Left handside of the equation.
+  ///   - right: Right handside of the equation.
+  /// - Returns: Returns Bool value of equation of two given chord types.
+  public static func ==(lhs: ChordType, rhs: ChordType) -> Bool {
+    return lhs.intervals == rhs.intervals
   }
 }
 
