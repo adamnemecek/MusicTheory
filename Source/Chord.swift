@@ -668,27 +668,9 @@ public struct ChordType: ChordDescription, Equatable {
   }
 }
 
-// MARK: - Chord
-
-/// Checks the equability between two chords by their base key and notes.
-///
-/// - Parameters:
-///   - left: Left handside of the equation.
-///   - right: Right handside of the equation.
-/// - Returns: Returns Bool value of equation of two given chords.
-public func ==(left: Chord?, right: Chord?) -> Bool {
-  switch (left, right) {
-  case (.some(let left), .some(let right)):
-    return left.key == right.key && left.type == right.type
-  case (.none, .none):
-    return true
-  default:
-    return false
-  }
-}
 
 /// Defines a chord with a root note and type.
-public struct Chord: ChordDescription {
+public struct Chord: ChordDescription, Equatable {
   /// Type of the chord.
   public var type: ChordType
   /// Root note of the chord.
@@ -767,6 +749,19 @@ public struct Chord: ChordDescription {
     }
     return all
   }
+
+  // MARK: - Chord
+
+  /// Checks the equability between two chords by their base key and notes.
+  ///
+  /// - Parameters:
+  ///   - left: Left handside of the equation.
+  ///   - right: Right handside of the equation.
+  /// - Returns: Returns Bool value of equation of two given chords.
+  public static func ==(lhs: Chord, rhs: Chord) -> Bool {
+    return lhs.key == rhs.key && lhs.type == rhs.type
+  }
+
 }
 
 // MARK: - Extensions
