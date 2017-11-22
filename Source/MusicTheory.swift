@@ -252,57 +252,6 @@ public func +(note: Note, interval: Interval) -> Note {
   return Note(midiNote: note.midiNote + interval.halfstep)
 }
 
-/// Calculates the `Note` above halfsteps.
-///
-/// - Parameters:
-///   - note: The note being added halfsteps.
-///   - halfstep: Halfsteps above.
-/// - Returns: Returns `Note` above halfsteps.
-public func +(note: Note, halfstep: Int) -> Note {
-  return Note(midiNote: note.midiNote + halfstep)
-}
-
-/// Calculates the `Note` below `Interval`.
-///
-/// - Parameters:
-///   - note: The note being calculated.
-///   - interval: Interval below.
-/// - Returns: Returns `Note` below interval.
-public func -(note: Note, interval: Interval) -> Note {
-  return Note(midiNote: note.midiNote - interval.halfstep)
-}
-
-/// Calculates the `Note` below halfsteps.
-///
-/// - Parameters:
-///   - note: The note being calculated.
-///   - halfstep: Halfsteps below.
-/// - Returns: Returns `Note` below halfsteps.
-public func -(note: Note, halfstep: Int) -> Note {
-  return Note(midiNote: note.midiNote - halfstep)
-}
-
-/// Calculates the interval between two notes.
-/// Doesn't matter left hand side and right hand side note places.
-///
-/// - Parameters:
-///   - lhs: Left hand side of the equation.
-///   - rhs: Right hand side of the equation.
-/// - Returns: `Intreval` between two notes. You can get the halfsteps from interval as well.
-public func -(lhs: Note, rhs: Note) -> Interval {
-	return Interval(halfstep: abs(rhs.midiNote - lhs.midiNote))
-}
-
-/// Compares the equality of two notes by their types and octaves.
-///
-/// - Parameters:
-///   - left: Left handside `Note` to be compared.
-///   - right: Right handside `Note` to be compared.
-/// - Returns: Returns the bool value of comparisation of two notes. 
-public func ==(left: Note, right: Note) -> Bool {
-  return left.type == right.type && left.octave == right.octave
-}
-
 /// Note object with `NoteType` and octave.
 /// Could be initilized with midiNote.
 public struct Note: Equatable, Codable {
@@ -339,6 +288,57 @@ public struct Note: Equatable, Codable {
 	public var midiNote: Int {
 		return type.rawValue + (octave * 12)
 	}
+
+  /// Calculates the `Note` above halfsteps.
+  ///
+  /// - Parameters:
+  ///   - note: The note being added halfsteps.
+  ///   - halfstep: Halfsteps above.
+  /// - Returns: Returns `Note` above halfsteps.
+  public static func +(note: Note, halfstep: Int) -> Note {
+    return Note(midiNote: note.midiNote + halfstep)
+  }
+
+  /// Calculates the `Note` below `Interval`.
+  ///
+  /// - Parameters:
+  ///   - note: The note being calculated.
+  ///   - interval: Interval below.
+  /// - Returns: Returns `Note` below interval.
+  public static func -(note: Note, interval: Interval) -> Note {
+    return Note(midiNote: note.midiNote - interval.halfstep)
+  }
+
+  /// Calculates the `Note` below halfsteps.
+  ///
+  /// - Parameters:
+  ///   - note: The note being calculated.
+  ///   - halfstep: Halfsteps below.
+  /// - Returns: Returns `Note` below halfsteps.
+  public static func -(note: Note, halfstep: Int) -> Note {
+    return Note(midiNote: note.midiNote - halfstep)
+  }
+
+  /// Calculates the interval between two notes.
+  /// Doesn't matter left hand side and right hand side note places.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side of the equation.
+  ///   - rhs: Right hand side of the equation.
+  /// - Returns: `Intreval` between two notes. You can get the halfsteps from interval as well.
+  public static func -(lhs: Note, rhs: Note) -> Interval {
+    return Interval(halfstep: abs(rhs.midiNote - lhs.midiNote))
+  }
+
+  /// Compares the equality of two notes by their types and octaves.
+  ///
+  /// - Parameters:
+  ///   - left: Left handside `Note` to be compared.
+  ///   - right: Right handside `Note` to be compared.
+  /// - Returns: Returns the bool value of comparisation of two notes.
+  public static func ==(left: Note, right: Note) -> Bool {
+    return left.type == right.type && left.octave == right.octave
+  }
 }
 
 public extension Note {
@@ -362,50 +362,6 @@ extension Note: CustomStringConvertible {
   public var description: String {
     return "\(type)\(octave)"
   }
-}
-
-// MARK: - Interval
-
-/// Adds two intervals and returns combined value of two.
-///
-/// - Parameters:
-///   - lhs: Left hand side of the equation.
-///   - rhs: Right hand side of the equation.
-/// - Returns: Combined interval value of two.
-public func +(lhs: Interval, rhs: Interval) -> Interval {
-  return Interval(halfstep: lhs.halfstep + rhs.halfstep)
-}
-
-/// Subsracts two intervals and returns the interval value between two.
-///
-/// - Parameters:
-///   - lhs: Left hand side of the equation.
-///   - rhs: Right hand side of the equation.
-/// - Returns: Interval between two intervals.
-public func -(lhs: Interval, rhs: Interval) -> Interval {
-  return Interval(halfstep: lhs.halfstep - rhs.halfstep)
-}
-
-/// Compares two `Interval` types.
-///
-/// - Parameters:
-///   - lhs: Left hand side of the equation.
-///   - rhs: Right hand side of the equation.
-/// - Returns: Returns bool value of equeation.
-public func ==(lhs: Interval, rhs: Interval) -> Bool {
-	return lhs.halfstep == rhs.halfstep
-}
-
-/// Extends `Interval` by any given octave.
-/// For example between C1 and D1, there are 2 halfsteps but between C1 and D2 there are 14 halfsteps.
-//// ```.M2 * 2``` will give you D2 from a C1.
-///
-/// - Parameters:
-///   - interval: Interval you want to extend by an octave.
-///   - octave: Octave you want to extend your interval by.
-/// - Returns: Returns new interval by calculating halfsteps between target interval and octave.
-public func *(interval: Interval, octave: Int) -> Interval {
-	return Interval(halfstep: interval.halfstep + (12 * (octave - 1)))
 }
 
 /// Defines the interval between `Note`s in halfstep tones and degrees.
@@ -506,6 +462,50 @@ public enum Interval: Equatable, ExpressibleByIntegerLiteral {
     case .P8: return 12
     case .custom(let h): return h
     }
+  }
+
+  // MARK: - Interval
+
+  /// Adds two intervals and returns combined value of two.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side of the equation.
+  ///   - rhs: Right hand side of the equation.
+  /// - Returns: Combined interval value of two.
+  public static func +(lhs: Interval, rhs: Interval) -> Interval {
+    return Interval(halfstep: lhs.halfstep + rhs.halfstep)
+  }
+
+  /// Subsracts two intervals and returns the interval value between two.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side of the equation.
+  ///   - rhs: Right hand side of the equation.
+  /// - Returns: Interval between two intervals.
+  public static func -(lhs: Interval, rhs: Interval) -> Interval {
+    return Interval(halfstep: lhs.halfstep - rhs.halfstep)
+  }
+
+  /// Compares two `Interval` types.
+  ///
+  /// - Parameters:
+  ///   - lhs: Left hand side of the equation.
+  ///   - rhs: Right hand side of the equation.
+  /// - Returns: Returns bool value of equeation.
+  public static func ==(lhs: Interval, rhs: Interval) -> Bool {
+    return lhs.halfstep == rhs.halfstep
+  }
+
+  /// Extends `Interval` by any given octave.
+  /// For example between C1 and D1, there are 2 halfsteps but between C1 and D2 there are 14 halfsteps.
+  //// ```.M2 * 2``` will give you D2 from a C1.
+  ///
+  /// - Parameters:
+  ///   - interval: Interval you want to extend by an octave.
+  ///   - octave: Octave you want to extend your interval by.
+  /// - Returns: Returns new interval by calculating halfsteps between target interval and octave.
+  public static func *(interval: Interval, octave: Int) -> Interval {
+    return Interval(halfstep: interval.halfstep + (12 * (octave - 1)))
   }
 }
 
